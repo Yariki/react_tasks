@@ -5,6 +5,8 @@ import Stack from 'react-bootstrap/Stack';
 
 import TestPureComponent from "./ Components/TestPureComponent";
 import TestComponent from "./ Components/TestComponent";
+import FuncComponent from './ Components/FunctionalComponent';
+
 
 function App() {
 
@@ -19,6 +21,8 @@ function App() {
 		<Stack gap={3}>
 			<TestPureComponent name="For testing PureComponent"/>
 			<TestComponent />
+      <FuncComponent /> 
+
 		</Stack>
     </div>
   );

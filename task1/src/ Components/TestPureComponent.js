@@ -14,6 +14,7 @@ class TestPureComponent extends  React.PureComponent{
 
 		return (
 			<div>
+				<label>Extended React.PureComponent</label>
 				<p>{name}</p>
 			</div>
 		);

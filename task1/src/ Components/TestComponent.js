@@ -29,6 +29,7 @@ class TestComponent extends React.Component {
 	render(){
 		return (
 			<Stack gap={1}>
+				<label>Extended React.Component</label>
 				<label className="form-label">{this.state.counter}</label>
 				<Button onClick={() => this.handleClick(1)}>Increment</Button>
 				<Button onClick={() => this.handleClick(-1)}>Decrement</Button>
