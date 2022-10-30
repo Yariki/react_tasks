@@ -1,0 +1,75 @@
+@charset "utf-8"
+
+// Import a Google Font
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700')
+
+// Set your brand colors
+$dark: #232323
+$pink: #FA7C91
+
+// Update Bulma's global variables
+$family-sans-serif: "Nunito", sans-serif
+$grey-dark: #a19e9e
+$grey-light: #c0bebe
+$primary: $dark
+$link: $pink
+$widescreen-enabled: true
+$fullhd-enabled: true
+
+// Update some of Bulma's component variables
+$body-background-color: $dark
+$control-border-width: 2px
+$input-border-color: transparent
+$input-shadow: none
+
+// Import only what you need from Bulma
+@import "../node_modules/bulma/sass/utilities/_all.sass"
+@import "../node_modules/bulma/sass/base/_all.sass"
+@import "../node_modules/bulma/sass/elements/button.sass"
+@import "../node_modules/bulma/sass/elements/container.sass"
+@import "../node_modules/bulma/sass/elements/title.sass"
+@import "../node_modules/bulma/sass/form/_all.sass"
+@import "../node_modules/bulma/sass/components/navbar.sass"
+@import "../node_modules/bulma/sass/layout/hero.sass"
+@import "../node_modules/bulma/sass/layout/section.sass"
+@import "../node_modules/bulma/sass/grid/all.sass"
+
+
+$assetsPath :"../public/images/"
+
+.image img
+  width: 200px
+
+.movie-list
+    padding: 0 10px 0 10px
+
+.speaker-row
+    display: flex
+    flex-wrap: wrap
+    min-width: 100%
+    justify-content: space-between
+    margin-left: -10px
+    margin-right: -10px
+
+.card-content .navbar
+    min-height: 0px
+
+.card-content .navbar-brand, .navbar-tabs
+    align-items: stretch
+    display: flex
+    flex-shrink: 0
+    min-height: 0px
+
+.top-header
+    width: 100%
+    background: url(#{$assetsPath}/background.png)
+
+.rows
+    display: flex
+    flex-direction: column
+
+
+
+
+
+
