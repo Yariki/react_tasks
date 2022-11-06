@@ -21,7 +21,13 @@ export const movies: Movie[] = [
     year: 2018,
     poster: "BohemiaRhapsody.png",
   },
-  { id:3,  name: "Kill Bill", genre: "Action", year: 2003, poster: "KillBill.png" },
+  {
+    id: 3,
+    name: "Kill Bill",
+    genre: "Action",
+    year: 2003,
+    poster: "KillBill.png",
+  },
   {
     id: 4,
     name: "Avengers Infinity War",
@@ -29,7 +35,13 @@ export const movies: Movie[] = [
     year: 2018,
     poster: "inifinity.jpg",
   },
-  { id:5,  name: "Inception", genre: "Action", year: 2010, poster: "inception.jpg" },
+  {
+    id: 5,
+    name: "Inception",
+    genre: "Action",
+    year: 2010,
+    poster: "inception.jpg",
+  },
   {
     id: 6,
     name: "Reservoir Dogs",

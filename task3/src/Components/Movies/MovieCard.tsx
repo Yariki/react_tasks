@@ -1,46 +1,43 @@
 import React from "react";
-import {Kebab, KebabItemValues} from "../Utils/Components/Kebab";
+import { Kebab, KebabItemValues } from "../Utils/Components/Kebab";
 
 type MovieProps = {
-  id: number,
+  id: number;
   name?: string;
   genre?: string;
   year?: number;
   poster?: string;
   edit?: (id: number) => void;
   delete?: (id: number) => void;
-
 };
 
 export const MovieCard: React.FunctionComponent<MovieProps> = (
   props: MovieProps
 ) => {
-
-    const kebabItems: KebabItemValues[] = [
-        {
-            label: "Edit",
-            click: () => {
-                if (props.edit) {
-                    props.edit(props.id);
-                }
-            }
-        },
-        {
-            label: "Delete",
-            click: () => {
-                if (props.delete) {
-                    props.delete(props.id);
-                }
-            }
+  const kebabItems: KebabItemValues[] = [
+    {
+      label: "Edit",
+      click: () => {
+        if (props.edit) {
+          props.edit(props.id);
         }
-
-    ];
+      },
+    },
+    {
+      label: "Delete",
+      click: () => {
+        if (props.delete) {
+          props.delete(props.id);
+        }
+      },
+    },
+  ];
 
   return (
     <div className="card">
       <div className="card-image">
         <figure className="image">
-          <Kebab items={kebabItems}/>
+          <Kebab items={kebabItems} />
           <img src={`images/` + props.poster} alt={props.poster}></img>
         </figure>
       </div>
