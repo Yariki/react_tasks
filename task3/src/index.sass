@@ -21,18 +21,21 @@ $body-background-color: $dark
 $control-border-width: 2px
 $input-border-color: transparent
 $input-shadow: none
+$dropdown-content-background-color: $dark
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass"
 @import "../node_modules/bulma/sass/base/_all.sass"
-@import "../node_modules/bulma/sass/elements/button.sass"
-@import "../node_modules/bulma/sass/elements/container.sass"
-@import "../node_modules/bulma/sass/elements/title.sass"
+@import "../node_modules/bulma/sass/elements/_all.sass"
 @import "../node_modules/bulma/sass/form/_all.sass"
 @import "../node_modules/bulma/sass/components/navbar.sass"
+@import "../node_modules/bulma/sass/components/modal.sass"
+@import "../node_modules/bulma/sass/components/dropdown.sass"
 @import "../node_modules/bulma/sass/layout/hero.sass"
 @import "../node_modules/bulma/sass/layout/section.sass"
+@import "../node_modules/bulma/sass/helpers/_all.sass"
 @import "../node_modules/bulma/sass/grid/all.sass"
+@import "../node_modules/bulma/sass/elements/all.sass"
 
 
 $assetsPath :"../public/images/"
@@ -68,8 +71,15 @@ $assetsPath :"../public/images/"
     display: flex
     flex-direction: column
 
+.image .dropdown
+    position: absolute
+    top: 10px
+    left: 75%
+    font-size: 10px
+    display: none
 
-
+.image:hover .dropdown
+    display: block
 
 
 
