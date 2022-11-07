@@ -11,3 +11,8 @@ export type ModalProps = {
   children: React.ReactNode;
   isShown: boolean;
 };
+
+export type SortOptions = {
+  value: number;
+  label: string;
+};

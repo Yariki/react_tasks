@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { MovieCard } from "./MovieCard";
-import { movies, Movie } from "../Utils/data";
+import { Movie } from "../Utils/data";
 import { MovieForm } from "../Utils/Forms/MovieForm";
 import { DeleteMessage } from "../Utils/Forms/DeleteMessage";
 
-export const MoviesList: React.FunctionComponent = () => {
+export type ListProps = {
+  movies: Movie[];
+};
+
+export const MoviesList: React.FunctionComponent<ListProps> = (
+  props: ListProps
+) => {
   const [isShown, setIsShown] = useState(false);
 
   const [isDeleteShown, setIsDeleteShown] = useState(false);
@@ -43,7 +49,7 @@ export const MoviesList: React.FunctionComponent = () => {
     <>
       <div className="movie-list">
         <div className="speaker-row">
-          {movies.map((movie, index) => (
+          {props.movies.map((movie, index) => (
             <MovieCard
               key={index}
               {...movie}
