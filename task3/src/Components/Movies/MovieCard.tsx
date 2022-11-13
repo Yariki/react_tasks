@@ -9,6 +9,7 @@ type MovieProps = {
   poster?: string;
   edit?: (id: number) => void;
   delete?: (id: number) => void;
+  onSelected?: () => void;
 };
 
 export const MovieCard: React.FunctionComponent<MovieProps> = (
@@ -34,7 +35,7 @@ export const MovieCard: React.FunctionComponent<MovieProps> = (
   ];
 
   return (
-    <div className="card">
+    <div className="card" onClick={props.onSelected}>
       <div className="card-image">
         <figure className="image">
           <Kebab items={kebabItems} />
