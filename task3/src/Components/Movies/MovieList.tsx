@@ -4,6 +4,11 @@ import { Movie } from "../Utils/data";
 import { MovieForm } from "../Utils/Forms/MovieForm";
 import { DeleteMessage } from "../Utils/Forms/DeleteMessage";
 
+import {
+  SelectedContext,
+  SelectedContextType,
+} from "../Context/SelectedContext";
+
 export type ListProps = {
   movies: Movie[];
 };
@@ -19,6 +24,8 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
     undefined
   );
   const [selectedId, setSelectedId] = useState(-1);
+
+  const { setMovie } = React.useContext(SelectedContext) as SelectedContextType;
 
   const editMovie = (id: number) => {
     setIsShown(true);
@@ -55,6 +62,7 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
               {...movie}
               edit={editMovie}
               delete={onDelete}
+              onSelected={() => setMovie(movie)}
             />
           ))}
         </div>
