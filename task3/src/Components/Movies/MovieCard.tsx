@@ -39,15 +39,19 @@ export const MovieCard: React.FunctionComponent<MovieProps> = (
       <div className="card-image">
         <figure className="image">
           <Kebab items={kebabItems} />
-          <img src={`images/` + props.posterPath} alt={props.posterPath}></img>
+          <img src={`images/` + props.posterPath} alt={props.title}></img>
         </figure>
       </div>
       <div className="card-content">
-        <nav className="navbar is-dark">
-          <div className="navbar-brand">{props.title}</div>
-          <div className="navbar-end">{props.releaseDate}</div>
-        </nav>
-        {props.genres?.join(", ")}
+        <div className="columns">
+          <div className="column">
+            <div style={{ whiteSpace: "pre-wrap" }}>{props.title}</div>
+          </div>
+          <div className="column">
+            <div style={{ whiteSpace: "pre-wrap" }}>{props.releaseDate}</div>
+          </div>
+        </div>
+        <div style={{ whiteSpace: "pre-wrap" }}>{props.genres?.join(", ")}</div>
       </div>
     </div>
   );

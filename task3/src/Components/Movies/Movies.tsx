@@ -33,7 +33,10 @@ export const Movies: React.FunctionComponent = () => {
 
   return (
     <div>
-      <Filter onChanges={() => {}} />
+      <Filter
+        filterChanged={(arr) => console.log(arr)}
+        sortChanged={(s) => console.log(s)}
+      />
       <MoviesCount />
       <MoviesList movies={movies} />
     </div>
