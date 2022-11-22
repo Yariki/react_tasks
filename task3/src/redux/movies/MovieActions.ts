@@ -1,5 +1,14 @@
 import { Dispatch } from "redux";
-import { Movie, MoviesGetRequest, MovieApi } from "../../Api";
+
+import { ThunkAction } from "redux-thunk";
+
+import {
+  Movie,
+  MoviesGetRequest,
+  MovieApi,
+  MoviesGetSearchByEnum,
+} from "../../Api";
+import { MoviesState } from "./MoviesReducer";
 
 export const GET_MOVIES_REQUEST = "GET_MOVIES_REQUEST";
 export const GET_MOVIES_SUCCESS = "GET_MOVIES_SUCCESS";
@@ -9,6 +18,13 @@ interface MovieAsync {
   isLoading: boolean;
   movies?: Movie[];
   error: string;
+  sortBy?: string;
+  sortOrder?: string;
+  search?: string;
+  searchBy?: MoviesGetSearchByEnum;
+  filter?: Array<string>;
+  offset?: string;
+  limit?: string;
 }
 
 interface GetMoviesRequest extends MovieAsync {
@@ -36,11 +52,15 @@ const requestMovies = (): AppAction => ({
   error: "",
 });
 
-const receiveMovies = (movies?: Movie[] | undefined): AppAction => ({
+const receiveMovies = (
+  movies: Movie[] | undefined,
+  request: MoviesGetRequest
+): AppAction => ({
   type: GET_MOVIES_SUCCESS,
   isLoading: false,
   movies,
   error: "",
+  ...request,
 });
 
 const moviesError = (error: string): AppAction => ({
@@ -50,17 +70,18 @@ const moviesError = (error: string): AppAction => ({
   error,
 });
 
-export const getMovies = (request: MoviesGetRequest) => {
-  return (dispatch: Dispatch<AppAction>) => {
+export const getMovies = (
+  request: MoviesGetRequest
+): ThunkAction<void, MoviesState, unknown, AppAction> => {
+  return async (dispatch: Dispatch<AppAction>) => {
     dispatch(requestMovies());
     const api = new MovieApi();
-    api
-      .moviesGet(request)
-      .then((response) => {
-        dispatch(receiveMovies(response.data));
-      })
-      .catch((error) => {
-        dispatch(moviesError(error));
-      });
+    try {
+      const response = await api.moviesGet(request);
+      return dispatch(receiveMovies(response.data, request));
+    } catch (error) {
+      console.log(error);
+      return dispatch(moviesError("An error occured"));
+    }
   };
 };

@@ -34,34 +34,34 @@ export const Search: React.FunctionComponent = () => {
           <figure className="image">
             <img
               style={{ width: "300px" }}
-              src={`images/` + movie.poster}
-              alt={movie.poster}
+              src={`images/` + movie.posterPath}
+              alt={movie.posterPath}
             />
           </figure>
         </div>
         <div className="column is-three-quarters">
           <div className="columns">
             <div className="column is-two-fifths">
-              <h1 className="title is-1">{movie.name}</h1>
+              <h1 className="title is-1">{movie.title}</h1>
             </div>
-            <div className="column is-one-quarter">{movie.score}</div>
+            <div className="column is-one-quarter">{movie.voteAverage}</div>
           </div>
           <div className="columns">
             <div className="column is-one-quarter">
-              <p>{movie.genre}</p>
+              <p>{movie.genres.join(",")}</p>
             </div>
           </div>
           <div className="columns">
             <div className="column is-one-quarter">
-              <p>{movie.year}</p>
+              <p>{movie.releaseDate}</p>
             </div>
             <div className="column is-one-quarter">
-              <p>{calculateDuration(movie.duration)}</p>
+              <p>{calculateDuration(movie.runtime)}</p>
             </div>
           </div>
           <div className="columns">
             <div className="column is-full">
-              <div className="content">{movie.description}</div>
+              <div className="content">{movie.overview}</div>
             </div>
           </div>
         </div>
