@@ -6,6 +6,9 @@ import {
 } from "../Context/SelectedContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import {MovieFormValues} from "../Utils/types";
+import {MoviesCreateRequest} from "../../Api";
+import {addMovie as addMovieRequest} from "../../redux/movies/MovieActions";
 
 export const Navigation: React.FunctionComponent = () => {
   const [isShown, setIsShown] = useState(false);
@@ -21,6 +24,23 @@ export const Navigation: React.FunctionComponent = () => {
   const closeMovie = () => {
     setIsShown(false);
   };
+
+  const saveMovie = (movie: MovieFormValues) => {
+    const moviewCreateRequest: MoviesCreateRequest = {
+         movieBase: {
+           title: movie.title,
+           releaseDate: movie.releaseDate,
+           posterPath: movie.posterPath,
+           genres: [movie.genres],
+           overview: movie.overview,
+           runtime: movie.runtime,
+           revenue: movie.revenue,
+           voteAverage: movie.voteAverage,
+           voteCount: movie.voteCount,
+         }
+       };
+      addMovieRequest(moviewCreateRequest);
+    };
 
   return (
     <>
@@ -40,7 +60,9 @@ export const Navigation: React.FunctionComponent = () => {
           )}
         </div>
       </div>
-      <MovieForm onClose={closeMovie} isShown={isShown} isEdit={false} />
+      {
+        isShown && <MovieForm onClose={closeMovie} onSave={saveMovie} isShown={isShown} isEdit={false} />
+      }
     </>
   );
 };

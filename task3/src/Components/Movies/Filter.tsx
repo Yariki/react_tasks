@@ -15,7 +15,6 @@ const filters: FilterOptions[] = [
   { value: "Family", label: "Family", checked: false },
   { value: "Comedy", label: "Comedy", checked: false },
   { value: "Fantasy", label: "Fantasy", checked: false },
-  { value: "Romance", label: "Romance", checked: false },
   { value: "Science Fiction", label: "Science Fiction", checked: false },
   { value: "Action", label: "Action", checked: false },
 ];
@@ -37,8 +36,8 @@ const orderSelection: OrderSelection[] = [
 
 const sortOptions: SortSelection[] = [
   { label: "Select", value: undefined },
-  { label: "Release Date", value: "releaseDate" },
-  { label: "Rating", value: "voteAverage" },
+  { label: "Release Date", value: "release_date" },
+  { label: "Rating", value: "vote_average" },
 ];
 
 export const Filter: React.FunctionComponent<FilterProps> = (
