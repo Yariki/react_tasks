@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MovieCard } from "./MovieCard";
-import { Movie } from "../Utils/data";
+import { Movie } from "../../Api";
 import { MovieForm } from "../Utils/Forms/MovieForm";
 import { DeleteMessage } from "../Utils/Forms/DeleteMessage";
 
@@ -10,7 +10,7 @@ import {
 } from "../Context/SelectedContext";
 
 export type ListProps = {
-  movies: Movie[];
+  movies?: Movie[] | undefined;
 };
 
 export const MoviesList: React.FunctionComponent<ListProps> = (
@@ -56,7 +56,7 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
     <>
       <div className="movie-list">
         <div className="speaker-row">
-          {props.movies.map((movie, index) => (
+          {props.movies?.map((movie, index) => (
             <MovieCard
               key={index}
               {...movie}

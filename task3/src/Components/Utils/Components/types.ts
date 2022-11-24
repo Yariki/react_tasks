@@ -12,7 +12,13 @@ export type ModalProps = {
   isShown: boolean;
 };
 
-export type SortOptions = {
-  value: number;
+export type FilterOptions = {
+  value: string;
   label: string;
+  checked: boolean;
+};
+
+export type SortOption = {
+  sortBy: string | undefined;
+  order: string | "asc" | "desc" | undefined;
 };

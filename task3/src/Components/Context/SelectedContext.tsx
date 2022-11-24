@@ -1,6 +1,6 @@
 import React, { createContext, FC, PropsWithChildren } from "react";
 import { useSelectedMovie } from "../Hooks/useSelectedMovie";
-import { Movie } from "../Utils/data";
+import { Movie } from "../../Api";
 
 export type SelectedContextType = {
   movie: Movie | null;

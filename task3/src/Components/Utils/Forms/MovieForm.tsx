@@ -4,7 +4,7 @@ import { ModalAction } from "../Components/types";
 import { InputField } from "../Components/InputField";
 import { SelectField, SelectOption } from "../Components/SelectField";
 import { TextAreaField } from "../Components/TextAreaField";
-import { Movie } from "../data";
+import { Movie } from "../../../Api";
 
 export type Props = {
   onClose?: () => void;
