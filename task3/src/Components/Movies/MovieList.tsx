@@ -1,46 +1,52 @@
 import React, { useState } from "react";
 import { MovieCard } from "./MovieCard";
-import {Movie, MoviesDeleteByIdRequest, MoviesUpdateByIdRequest} from "../../Api";
+import {
+  Movie,
+  MoviesDeleteByIdRequest,
+  MoviesUpdateByIdRequest,
+} from "../../Api";
 import { MovieForm } from "../Utils/Forms/MovieForm";
 import { DeleteMessage } from "../Utils/Forms/DeleteMessage";
-import {editMovie as editMoviewRequest, deleteMovie as deleteMovieRequest} from "../../redux/movies/MovieActions";
+import {
+  editMovie as editMoviewRequest,
+  deleteMovie as deleteMovieRequest,
+} from "../../redux/movies/MovieActions";
 
 import {
   SelectedContext,
   SelectedContextType,
 } from "../Context/SelectedContext";
-import {MovieFormValues} from "../Utils/types";
+import { MovieFormValues } from "../Utils/types";
 
 export type ListProps = {
   movies?: Movie[] | undefined;
 };
 
 type ModalFormPorperties = {
-    isShown: boolean;
+  isShown: boolean;
 
-    isDeleteShown: boolean;
-    selectedMovie: Movie | null | undefined;
+  isDeleteShown: boolean;
+  selectedMovie: Movie | null | undefined;
 };
 
 export const MoviesList: React.FunctionComponent<ListProps> = (
   props: ListProps
 ) => {
-
   const [modalProps, setModalProps] = useState<ModalFormPorperties>({
     isShown: false,
     isDeleteShown: false,
     selectedMovie: null,
   });
 
-  const {setMovie } = React.useContext(SelectedContext) as SelectedContextType;
+  const { setMovie } = React.useContext(SelectedContext) as SelectedContextType;
 
   const editMovie = (id: number) => {
-    const {movies} = props;
+    const { movies } = props;
     const selected = movies?.find((m) => m.id === id);
     setModalProps({
-        isShown: true,
-        isDeleteShown: false,
-        selectedMovie: selected,
+      isShown: true,
+      isDeleteShown: false,
+      selectedMovie: selected,
     });
   };
 
@@ -49,7 +55,7 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
       isShown: false,
       isDeleteShown: false,
       selectedMovie: null,
-    })
+    });
   };
 
   const onDelete = (id: number) => {
@@ -62,8 +68,8 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
 
   const deleteMovie = () => {
     const deleteRequest: MoviesDeleteByIdRequest = {
-      id: modalProps.selectedMovie?.id.toString() || ""
-    }
+      id: modalProps.selectedMovie?.id.toString() || "",
+    };
     // @ts-ignore
     deleteMovieRequest(modalProps.selectedMovie, deleteRequest);
   };
@@ -88,13 +94,14 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
         runtime: movie.runtime,
         revenue: movie.revenue,
         voteAverage: movie.voteAverage,
-        voteCount: movie.voteCount
-      }
+        voteCount: movie.voteCount,
+      },
     };
     editMoviewRequest(movieUpdateRequest);
   };
 
-  const message = "Delete movie with id " + modalProps?.selectedMovie?.title + " ?";
+  const message =
+    "Delete movie with id " + modalProps?.selectedMovie?.title + " ?";
 
   return (
     <>
@@ -112,26 +119,23 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
         </div>
       </div>
 
-      {
-          modalProps.selectedMovie && modalProps.isShown && (
-          <MovieForm
-            onClose={closeMovie}
-            onSave= {saveMovie}
-            isShown={modalProps.isShown}
-            isEdit={true}
-            data={modalProps.selectedMovie}
-          />)
-      }
-      {
-        modalProps.selectedMovie && modalProps.isDeleteShown && (
-              <DeleteMessage
-                  isShown={modalProps.isDeleteShown}
-                  message={message}
-                  ok={deleteMovie}
-                  cancel={cancel}
-              />
-          )
-      }
+      {modalProps.selectedMovie && modalProps.isShown && (
+        <MovieForm
+          onClose={closeMovie}
+          onSave={saveMovie}
+          isShown={modalProps.isShown}
+          isEdit={true}
+          data={modalProps.selectedMovie}
+        />
+      )}
+      {modalProps.selectedMovie && modalProps.isDeleteShown && (
+        <DeleteMessage
+          isShown={modalProps.isDeleteShown}
+          message={message}
+          ok={deleteMovie}
+          cancel={cancel}
+        />
+      )}
     </>
   );
 };

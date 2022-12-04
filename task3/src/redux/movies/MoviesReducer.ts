@@ -1,21 +1,21 @@
 import {
   ADD_MOVIE_REQUEST,
-    ADD_MOVIE_SUCCESS,
-    ADD_MOVIE_FAILURE,
-    EDIT_MOVIE_REQUEST,
-    EDIT_MOVIE_SUCCESS,
-    EDIT_MOVIE_FAILURE,
-    DELETE_MOVIE_REQUEST,
-    DELETE_MOVIE_SUCCESS,
-    DELETE_MOVIE_FAILURE,
+  ADD_MOVIE_SUCCESS,
+  ADD_MOVIE_FAILURE,
+  EDIT_MOVIE_REQUEST,
+  EDIT_MOVIE_SUCCESS,
+  EDIT_MOVIE_FAILURE,
+  DELETE_MOVIE_REQUEST,
+  DELETE_MOVIE_SUCCESS,
+  DELETE_MOVIE_FAILURE,
   AppAction,
   GET_MOVIES_FAILURE,
   GET_MOVIES_REQUEST,
   GET_MOVIES_SUCCESS,
 } from "./MovieActions";
 
-import {Movie} from "../../Api/models/Movie";
-import {MoviesGetSearchByEnum} from "../../Api";
+import { Movie } from "../../Api/models/Movie";
+import { MoviesGetSearchByEnum } from "../../Api";
 
 export interface MoviesState {
   isLoading: boolean;
@@ -57,33 +57,39 @@ export const moviesReducer = (
     case ADD_MOVIE_REQUEST:
       return { isLoading: action.isLoading, error: "" };
     case ADD_MOVIE_SUCCESS: {
-        // @ts-ignore
-      const newArray = action.movie ? [...state.movies, action.movie] : [action.movie];
-        return { isLoading: false, movies: newArray, error: "" };
-      }
+      // @ts-ignore
+      const newArray = action.movie
+        ? [...state.movies, action.movie]
+        : [action.movie];
+      return { isLoading: false, movies: newArray, error: "" };
+    }
     case ADD_MOVIE_FAILURE:
       return { isLoading: false, error: action.error };
     case EDIT_MOVIE_REQUEST:
       return { isLoading: action.isLoading, error: "" };
-    case EDIT_MOVIE_SUCCESS:{
-        const newArray = action.movie ? state.movies?.map((movie) => {
-          if(movie.id === action.movie?.id){
-            return action.movie;
-          }
-          return movie;
-        }): [];
-        return { isLoading: false, movies: newArray, error: "" };
-      }
+    case EDIT_MOVIE_SUCCESS: {
+      const newArray = action.movie
+        ? state.movies?.map((movie) => {
+            if (movie.id === action.movie?.id) {
+              return action.movie;
+            }
+            return movie;
+          })
+        : [];
+      return { isLoading: false, movies: newArray, error: "" };
+    }
     case EDIT_MOVIE_FAILURE:
       return { isLoading: false, error: action.error };
     case DELETE_MOVIE_REQUEST:
-        return { isLoading: action.isLoading, error: "" };
-    case DELETE_MOVIE_SUCCESS:{
-          var array = action.movie ? state.movies?.filter((movie) => movie.id !== action.movie?.id) : [];
-          return { isLoading: false, movies: array, error: "" };
-        }
+      return { isLoading: action.isLoading, error: "" };
+    case DELETE_MOVIE_SUCCESS: {
+      var array = action.movie
+        ? state.movies?.filter((movie) => movie.id !== action.movie?.id)
+        : [];
+      return { isLoading: false, movies: array, error: "" };
+    }
     case DELETE_MOVIE_FAILURE:
-        return { isLoading: false, error: action.error };
+      return { isLoading: false, error: action.error };
     default:
       return state;
   }
