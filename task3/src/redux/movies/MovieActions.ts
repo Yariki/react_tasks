@@ -200,38 +200,53 @@ export const getMovies = (
       return dispatch(receiveMovies(response.data, request));
     } catch (error) {
       console.log(error);
+      // @ts-ignore
+      console.log(error.stack);
+
       return dispatch(moviesError("An error occured"));
     }
   };
 };
 
 export const addMovie = (
-  movieCreateRequest: MoviesCreateRequest
+  movieCreateRequest: MoviesCreateRequest,
+  callback: () => void
 ): ThunkAction<void, MoviesState, unknown, AppAction> => {
   return async (dispatch: Dispatch<AppAction>) => {
     dispatch(addMovieRequest());
     const api = new MovieApi();
     try {
       const response = await api.moviesCreate(movieCreateRequest);
+      if (callback) {
+        callback();
+      }
       return dispatch(addMovieSuccess(response));
     } catch (error) {
       console.log(error);
+      // @ts-ignore
+      console.log(error.stack);
       return dispatch(addMivieError("An error occured while adding movie"));
     }
   };
 };
 
 export const editMovie = (
-  movieUpdateRequest: MoviesUpdateByIdRequest
+  movieUpdateRequest: MoviesUpdateByIdRequest,
+  callback: () => void
 ): ThunkAction<void, MoviesState, unknown, AppAction> => {
   return async (dispatch: Dispatch<AppAction>) => {
     dispatch(editMovieRequest());
     const api = new MovieApi();
     try {
       const response = await api.moviesUpdateById(movieUpdateRequest);
+      if (callback) {
+        callback();
+      }
       return dispatch(editMOvieSuccess(response));
     } catch (e) {
       console.log(e);
+      // @ts-ignore
+      console.log(error.stack);
       return dispatch(editMovieError("An error occured while editing movie"));
     }
   };
@@ -239,7 +254,8 @@ export const editMovie = (
 
 export const deleteMovie = (
   movie: Movie,
-  movieDeleteRequest: MoviesDeleteByIdRequest
+  movieDeleteRequest: MoviesDeleteByIdRequest,
+  callback: () => void
 ): ThunkAction<void, MoviesState, unknown, AppAction> => {
   return async (dispatch: Dispatch<AppAction>) => {
     dispatch(deleteMovieRequest());
@@ -247,6 +263,9 @@ export const deleteMovie = (
     try {
       const response = await api.moviesDeleteById(movieDeleteRequest);
       console.log(response);
+      if (callback) {
+        callback();
+      }
       return dispatch(deleteMovieSuccess(movie));
     } catch (e) {
       console.log(e);

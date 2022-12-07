@@ -55,18 +55,15 @@ export const moviesReducer = (
     case GET_MOVIES_FAILURE:
       return { isLoading: false, movies: [], error: action.error };
     case ADD_MOVIE_REQUEST:
-      return { isLoading: action.isLoading, error: "" };
+      return { isLoading: action.isLoading, error: "", movies: state.movies };
     case ADD_MOVIE_SUCCESS: {
-      // @ts-ignore
-      const newArray = action.movie
-        ? [...state.movies, action.movie]
-        : [action.movie];
+      const newArray = getNewMoviesList(state.movies, action.movie);
       return { isLoading: false, movies: newArray, error: "" };
     }
     case ADD_MOVIE_FAILURE:
       return { isLoading: false, error: action.error };
     case EDIT_MOVIE_REQUEST:
-      return { isLoading: action.isLoading, error: "" };
+      return { isLoading: action.isLoading, error: "", movies: state.movies };
     case EDIT_MOVIE_SUCCESS: {
       const newArray = action.movie
         ? state.movies?.map((movie) => {
@@ -81,7 +78,7 @@ export const moviesReducer = (
     case EDIT_MOVIE_FAILURE:
       return { isLoading: false, error: action.error };
     case DELETE_MOVIE_REQUEST:
-      return { isLoading: action.isLoading, error: "" };
+      return { isLoading: action.isLoading, error: "", movies: state.movies };
     case DELETE_MOVIE_SUCCESS: {
       var array = action.movie
         ? state.movies?.filter((movie) => movie.id !== action.movie?.id)
@@ -94,3 +91,14 @@ export const moviesReducer = (
       return state;
   }
 };
+
+function getNewMoviesList(
+  movies: Movie[] | undefined,
+  addedMovie: Movie | undefined
+): Movie[] {
+  let newArray = movies?.map((m) => m) || [];
+  if (addedMovie) {
+    newArray.push(addedMovie);
+  }
+  return newArray;
+}

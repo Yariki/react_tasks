@@ -8,9 +8,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { MovieFormValues } from "../Utils/types";
 import { MoviesCreateRequest } from "../../Api";
-import { addMovie as addMovieRequest } from "../../redux/movies/MovieActions";
+import {
+  addMovie as addMovieRequest,
+  AppAction,
+} from "../../redux/movies/MovieActions";
+import { ThunkDispatch } from "redux-thunk";
+import { MoviesState } from "../../redux/movies/MoviesReducer";
+import { useDispatch } from "react-redux";
 
 export const Navigation: React.FunctionComponent = () => {
+  const dispatch: ThunkDispatch<MoviesState, {}, AppAction> = useDispatch();
+
   const [isShown, setIsShown] = useState(false);
 
   const { movie, setMovie } = React.useContext(
@@ -39,7 +47,7 @@ export const Navigation: React.FunctionComponent = () => {
         voteCount: movie.voteCount,
       },
     };
-    addMovieRequest(moviewCreateRequest);
+    dispatch(addMovieRequest(moviewCreateRequest, closeMovie));
   };
 
   return (

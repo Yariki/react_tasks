@@ -10,6 +10,7 @@ import { DeleteMessage } from "../Utils/Forms/DeleteMessage";
 import {
   editMovie as editMoviewRequest,
   deleteMovie as deleteMovieRequest,
+  AppAction,
 } from "../../redux/movies/MovieActions";
 
 import {
@@ -17,6 +18,9 @@ import {
   SelectedContextType,
 } from "../Context/SelectedContext";
 import { MovieFormValues } from "../Utils/types";
+import { ThunkDispatch } from "redux-thunk";
+import { MoviesState } from "../../redux/movies/MoviesReducer";
+import { useDispatch } from "react-redux";
 
 export type ListProps = {
   movies?: Movie[] | undefined;
@@ -32,6 +36,8 @@ type ModalFormPorperties = {
 export const MoviesList: React.FunctionComponent<ListProps> = (
   props: ListProps
 ) => {
+  const dispatch: ThunkDispatch<MoviesState, {}, AppAction> = useDispatch();
+
   const [modalProps, setModalProps] = useState<ModalFormPorperties>({
     isShown: false,
     isDeleteShown: false,
@@ -71,14 +77,25 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
       id: modalProps.selectedMovie?.id.toString() || "",
     };
     // @ts-ignore
-    deleteMovieRequest(modalProps.selectedMovie, deleteRequest);
+    dispatch(
+      deleteMovieRequest(modalProps.selectedMovie, deleteRequest, onCloseModal)
+    );
+  };
+
+  const onCloseModal = () => {
+    setModalProps({
+      isShown: false,
+      isDeleteShown: false,
+      selectedMovie: undefined,
+    });
+    setMovie(null);
   };
 
   const cancel = () => {
     setModalProps({
       isShown: false,
       isDeleteShown: false,
-      selectedMovie: null,
+      selectedMovie: modalProps.selectedMovie,
     });
   };
 
@@ -97,7 +114,7 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
         voteCount: movie.voteCount,
       },
     };
-    editMoviewRequest(movieUpdateRequest);
+    dispatch(editMoviewRequest(movieUpdateRequest, onCloseModal));
   };
 
   const message =
