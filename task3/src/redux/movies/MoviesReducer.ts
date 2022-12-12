@@ -80,9 +80,9 @@ export const moviesReducer = (
     case DELETE_MOVIE_REQUEST:
       return { isLoading: action.isLoading, error: "", movies: state.movies };
     case DELETE_MOVIE_SUCCESS: {
-      var array = action.movie
+      var array = action.deletedMovieId
         ? state.movies?.filter((movie) => movie.id !== action.movie?.id)
-        : [];
+        : state.movies;
       return { isLoading: false, movies: array, error: "" };
     }
     case DELETE_MOVIE_FAILURE:

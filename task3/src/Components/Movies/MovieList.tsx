@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MovieCard } from "./MovieCard";
 import {
   Movie,
+  MovieApi,
   MoviesDeleteByIdRequest,
+  MoviesGetByIdRequest,
   MoviesUpdateByIdRequest,
 } from "../../Api";
 import { MovieForm } from "../Utils/Forms/MovieForm";
@@ -21,6 +23,7 @@ import { MovieFormValues } from "../Utils/types";
 import { ThunkDispatch } from "redux-thunk";
 import { MoviesState } from "../../redux/movies/MoviesReducer";
 import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 export type ListProps = {
   movies?: Movie[] | undefined;
@@ -45,6 +48,24 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
   });
 
   const { setMovie } = React.useContext(SelectedContext) as SelectedContextType;
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const movieId = searchParams.get("movieId") ?? "";
+
+    if (movieId === undefined || movieId === "") {
+      return;
+    }
+
+    const getRequest: MoviesGetByIdRequest = {
+      id: movieId,
+    };
+
+    const api = new MovieApi();
+
+    api.moviesGetById(getRequest).then((m) => setMovie(m));
+  }, [searchParams]);
 
   const editMovie = (id: number) => {
     const { movies } = props;
@@ -78,7 +99,11 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
     };
     // @ts-ignore
     dispatch(
-      deleteMovieRequest(modalProps.selectedMovie, deleteRequest, onCloseModal)
+      deleteMovieRequest(
+        modalProps.selectedMovie?.id,
+        deleteRequest,
+        onCloseModal
+      )
     );
   };
 
@@ -130,7 +155,9 @@ export const MoviesList: React.FunctionComponent<ListProps> = (
               {...movie}
               edit={editMovie}
               delete={onDelete}
-              onSelected={() => setMovie(movie)}
+              onSelected={() =>
+                setSearchParams({ movieId: movie.id.toString() })
+              }
             />
           ))}
         </div>

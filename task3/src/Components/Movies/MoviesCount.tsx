@@ -1,9 +1,16 @@
 import React from "react";
+import { number } from "yup/lib/locale";
 
-export const MoviesCount: React.FunctionComponent = () => {
+export interface IMovieCountProps {
+  count?: number;
+}
+
+export const MoviesCount: React.FunctionComponent<IMovieCountProps> = (
+  props: IMovieCountProps
+) => {
   return (
     <div className="block">
-      <label>{39} movies found</label>
+      <label>{props.count} movies found</label>
     </div>
   );
 };

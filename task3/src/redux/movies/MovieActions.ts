@@ -41,6 +41,7 @@ export interface MovieAsync {
   offset?: string;
   limit?: string;
   movie?: Movie;
+  deletedMovieId?: number;
 }
 
 interface GetMoviesRequest extends MovieAsync {
@@ -176,11 +177,11 @@ const deleteMovieRequest = (): AppAction => ({
   error: "",
 });
 
-const deleteMovieSuccess = (movie: Movie): AppAction => ({
+const deleteMovieSuccess = (movieId: number | undefined): AppAction => ({
   type: DELETE_MOVIE_SUCCESS,
   isLoading: false,
   error: "",
-  movie,
+  deletedMovieId: movieId,
 });
 
 const deleteMovieError = (error: string): AppAction => ({
@@ -253,7 +254,7 @@ export const editMovie = (
 };
 
 export const deleteMovie = (
-  movie: Movie,
+  movieId: number | undefined,
   movieDeleteRequest: MoviesDeleteByIdRequest,
   callback: () => void
 ): ThunkAction<void, MoviesState, unknown, AppAction> => {
@@ -266,7 +267,7 @@ export const deleteMovie = (
       if (callback) {
         callback();
       }
-      return dispatch(deleteMovieSuccess(movie));
+      return dispatch(deleteMovieSuccess(movieId));
     } catch (e) {
       console.log(e);
       return dispatch(
