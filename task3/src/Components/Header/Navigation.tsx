@@ -6,8 +6,19 @@ import {
 } from "../Context/SelectedContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { MovieFormValues } from "../Utils/types";
+import { MoviesCreateRequest } from "../../Api";
+import {
+  addMovie as addMovieRequest,
+  AppAction,
+} from "../../redux/movies/MovieActions";
+import { ThunkDispatch } from "redux-thunk";
+import { MoviesState } from "../../redux/movies/MoviesReducer";
+import { useDispatch } from "react-redux";
 
 export const Navigation: React.FunctionComponent = () => {
+  const dispatch: ThunkDispatch<MoviesState, {}, AppAction> = useDispatch();
+
   const [isShown, setIsShown] = useState(false);
 
   const { movie, setMovie } = React.useContext(
@@ -20,6 +31,23 @@ export const Navigation: React.FunctionComponent = () => {
 
   const closeMovie = () => {
     setIsShown(false);
+  };
+
+  const saveMovie = (movie: MovieFormValues) => {
+    const moviewCreateRequest: MoviesCreateRequest = {
+      movieBase: {
+        title: movie.title,
+        releaseDate: movie.releaseDate,
+        posterPath: movie.posterPath,
+        genres: [movie.genres],
+        overview: movie.overview,
+        runtime: movie.runtime,
+        revenue: movie.revenue,
+        voteAverage: movie.voteAverage,
+        voteCount: movie.voteCount,
+      },
+    };
+    dispatch(addMovieRequest(moviewCreateRequest, closeMovie));
   };
 
   return (
@@ -40,7 +68,14 @@ export const Navigation: React.FunctionComponent = () => {
           )}
         </div>
       </div>
-      <MovieForm onClose={closeMovie} isShown={isShown} isEdit={false} />
+      {isShown && (
+        <MovieForm
+          onClose={closeMovie}
+          onSave={saveMovie}
+          isShown={isShown}
+          isEdit={false}
+        />
+      )}
     </>
   );
 };

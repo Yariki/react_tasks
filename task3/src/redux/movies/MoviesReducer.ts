@@ -1,8 +1,17 @@
 import {
+  ADD_MOVIE_REQUEST,
+  ADD_MOVIE_SUCCESS,
+  ADD_MOVIE_FAILURE,
+  EDIT_MOVIE_REQUEST,
+  EDIT_MOVIE_SUCCESS,
+  EDIT_MOVIE_FAILURE,
+  DELETE_MOVIE_REQUEST,
+  DELETE_MOVIE_SUCCESS,
+  DELETE_MOVIE_FAILURE,
+  AppAction,
+  GET_MOVIES_FAILURE,
   GET_MOVIES_REQUEST,
   GET_MOVIES_SUCCESS,
-  GET_MOVIES_FAILURE,
-  AppAction,
 } from "./MovieActions";
 
 import { Movie } from "../../Api/models/Movie";
@@ -45,7 +54,51 @@ export const moviesReducer = (
       return { ...action, isLoading: false, movies: action.movies, error: "" };
     case GET_MOVIES_FAILURE:
       return { isLoading: false, movies: [], error: action.error };
+    case ADD_MOVIE_REQUEST:
+      return { isLoading: action.isLoading, error: "", movies: state.movies };
+    case ADD_MOVIE_SUCCESS: {
+      const newArray = getNewMoviesList(state.movies, action.movie);
+      return { isLoading: false, movies: newArray, error: "" };
+    }
+    case ADD_MOVIE_FAILURE:
+      return { isLoading: false, error: action.error };
+    case EDIT_MOVIE_REQUEST:
+      return { isLoading: action.isLoading, error: "", movies: state.movies };
+    case EDIT_MOVIE_SUCCESS: {
+      const newArray = action.movie
+        ? state.movies?.map((movie) => {
+            if (movie.id === action.movie?.id) {
+              return action.movie;
+            }
+            return movie;
+          })
+        : [];
+      return { isLoading: false, movies: newArray, error: "" };
+    }
+    case EDIT_MOVIE_FAILURE:
+      return { isLoading: false, error: action.error };
+    case DELETE_MOVIE_REQUEST:
+      return { isLoading: action.isLoading, error: "", movies: state.movies };
+    case DELETE_MOVIE_SUCCESS: {
+      var array = action.movie
+        ? state.movies?.filter((movie) => movie.id !== action.movie?.id)
+        : [];
+      return { isLoading: false, movies: array, error: "" };
+    }
+    case DELETE_MOVIE_FAILURE:
+      return { isLoading: false, error: action.error };
     default:
       return state;
   }
 };
+
+function getNewMoviesList(
+  movies: Movie[] | undefined,
+  addedMovie: Movie | undefined
+): Movie[] {
+  let newArray = movies?.map((m) => m) || [];
+  if (addedMovie) {
+    newArray.push(addedMovie);
+  }
+  return newArray;
+}
