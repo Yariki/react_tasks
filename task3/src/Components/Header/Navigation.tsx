@@ -15,6 +15,7 @@ import {
 import { ThunkDispatch } from "redux-thunk";
 import { MoviesState } from "../../redux/movies/MoviesReducer";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 export const Navigation: React.FunctionComponent = () => {
   const dispatch: ThunkDispatch<MoviesState, {}, AppAction> = useDispatch();

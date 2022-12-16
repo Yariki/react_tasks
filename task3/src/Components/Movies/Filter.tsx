@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FilterOptions, SortOption } from "../Utils/Components/types";
 import $ from "jquery";
+import { useSearchParams } from "react-router-dom";
+import { StringMappingType } from "typescript";
 
 export type FilterProps = {
   filterChanged: (arr: Array<string>) => void;
@@ -37,7 +39,7 @@ const orderSelection: OrderSelection[] = [
 const sortOptions: SortSelection[] = [
   { label: "Select", value: undefined },
   { label: "Release Date", value: "release_date" },
-  { label: "Rating", value: "vote_average" },
+  { label: "Name", value: "title" },
 ];
 
 export const Filter: React.FunctionComponent<FilterProps> = (
@@ -50,6 +52,57 @@ export const Filter: React.FunctionComponent<FilterProps> = (
     order: undefined,
   });
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const genre = searchParams.get("genre");
+
+    if (!genre) {
+      clearFiltering();
+      return;
+    }
+    var genres: string[] = genre.split(",");
+
+    setGenres(genres);
+
+    const temp = [...filter];
+    temp.forEach((f) => {
+      f.checked = false;
+    });
+
+    genres.forEach((g) => {
+      const index = temp.findIndex((item) => item.value === g);
+      temp[index].checked = true;
+    });
+
+    setFilter(temp);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (sort.sortBy !== undefined && sort.order !== undefined) {
+      setSearchParams({ sortBy: sort.sortBy + "," + sort.order });
+      return;
+    }
+  }, [sort]);
+
+  useEffect(() => {
+    const sortBy = searchParams.get("sortBy") ?? "";
+
+    if (sortBy !== undefined && sortBy.indexOf(",") > -1) {
+      const sort = sortBy.split(",");
+      setSort({ sortBy: sort[0], order: sort[1] as "asc" | "desc" });
+    }
+  }, [searchParams]);
+
+  const clearFiltering = () => {
+    setGenres([]);
+    const temp = [...filter];
+    temp.forEach((f) => {
+      f.checked = false;
+    });
+    setFilter(temp);
+  };
+
   const updateFilter = (value: string, checked: boolean) => {
     const temp = [...filter];
     const index = temp.findIndex((item) => item.value === value);
@@ -59,20 +112,30 @@ export const Filter: React.FunctionComponent<FilterProps> = (
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
+    let temp = handleFilters(value, checked);
+    props.filterChanged(temp);
+  };
+
+  const handleFilters = (value: string, checked: boolean): any[] => {
     let temp = [];
     if (checked) {
       temp = [...genres, value];
       setGenres(temp);
 
       updateFilter(value, checked);
+      setGenresInRoute(temp);
     } else {
       temp = genres.filter((genre: string) => genre !== value);
       setGenres(temp);
 
       updateFilter(value, checked);
+      setGenresInRoute(temp);
     }
+    return temp;
+  };
 
-    props.filterChanged(temp);
+  const setGenresInRoute = (genres: string[]) => {
+    setSearchParams({ genre: genres.join(",") });
   };
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
