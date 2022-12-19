@@ -30,7 +30,7 @@ export interface MoviesState {
   limit?: string;
 }
 
-const defaultState: MoviesState = {
+export const defaultState: MoviesState = {
   isLoading: false,
   movies: [],
   error: "",

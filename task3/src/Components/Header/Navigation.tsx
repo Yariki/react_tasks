@@ -59,7 +59,12 @@ export const Navigation: React.FunctionComponent = () => {
         </div>
         <div className="column is-2">
           {movie === null ? (
-            <button className="button is-danger" onClick={addMovie}>
+            <button
+              id="btnAddMovie"
+              data-testid="btnAddMovie"
+              className="button is-danger"
+              onClick={addMovie}
+            >
               + Add Movie
             </button>
           ) : (

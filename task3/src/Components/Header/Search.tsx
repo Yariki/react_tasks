@@ -46,6 +46,8 @@ export const Search: React.FunctionComponent = () => {
       <div className="field has-addons has-addons-centered">
         <div className="control">
           <input
+            id="search"
+            name="search"
             className="input"
             type="text"
             placeholder="Search"
