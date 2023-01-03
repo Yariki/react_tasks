@@ -179,6 +179,7 @@ export const Filter: React.FunctionComponent<FilterProps> = (
         <div className="select is-small">
           <select
             id="sortSelection"
+            name="sortSelection"
             value={sort.sortBy}
             onChange={handleSortChange}
           >
@@ -192,6 +193,7 @@ export const Filter: React.FunctionComponent<FilterProps> = (
         <div className="select is-small">
           <select
             id="orderSelection"
+            name="orderSelection"
             value={sort.order}
             onChange={handleSortChange}
           >

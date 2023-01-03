@@ -1,0 +1,30 @@
+{
+  "name": "task11_ssr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "codegen": "openapi-generator-cli generate -i http://localhost:4000/swagger.yaml -o api -g typescript-fetch --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true"
+  },
+  "dependencies": {
+    "@next/font": "13.1.1",
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.26",
+    "@types/react-dom": "18.0.10",
+    "bootstrap": "^5.2.3",
+    "eslint": "8.31.0",
+    "eslint-config-next": "13.1.1",
+    "next": "13.1.1",
+    "react": "18.2.0",
+    "react-bootstrap": "^2.7.0",
+    "react-dom": "18.2.0",
+    "typescript": "4.9.4"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.5.2",
+    "openapi-typescript-codegen": "^0.23.0"
+  }
+}

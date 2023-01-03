@@ -102,7 +102,7 @@ export type MovieActionTypes =
 export type AppAction = MovieActionTypes;
 
 // get movies
-const requestMovies = (): AppAction => ({
+export const requestMovies = (): AppAction => ({
   type: GET_MOVIES_REQUEST,
   isLoading: true,
   movies: [],
@@ -120,7 +120,7 @@ const receiveMovies = (
   ...request,
 });
 
-const moviesError = (error: string): AppAction => ({
+export const moviesError = (error: string): AppAction => ({
   type: GET_MOVIES_FAILURE,
   isLoading: false,
   movies: [],
